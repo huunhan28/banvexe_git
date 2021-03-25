@@ -43,6 +43,7 @@ public class muave extends javax.swing.JFrame {
             }
         }catch(SQLException e){
             System.out.println("loi lay Mail");
+            System.out.println("");
         }
     }
     void layTuyen(){
