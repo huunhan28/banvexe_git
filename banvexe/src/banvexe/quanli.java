@@ -42,7 +42,7 @@ public class quanli extends javax.swing.JFrame {
         layTuyenTram();
         layNhanVien();
         layTuyen();
-        layMail();
+        layTaiKhoan();
         layVe();
         layXe();
         layThongKeTheoNgayTT();
@@ -76,9 +76,9 @@ public class quanli extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLayeredPaneQuanLy = new javax.swing.JLayeredPane();
-        jPanelMail = new javax.swing.JPanel();
+        jPanelTaiKhoan = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTableMail = new javax.swing.JTable();
+        jTableTaiKhoan = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jPanelNhanVien = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -114,6 +114,9 @@ public class quanli extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane10 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jPanelLoaiTaiKhoan = new javax.swing.JPanel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        jTableLoaiTaiKhoan = new javax.swing.JTable();
         jPanelList = new javax.swing.JPanel();
         jPanelList1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -139,6 +142,9 @@ public class quanli extends javax.swing.JFrame {
         jPanelList6 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        jPanelList9 = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
 
@@ -273,15 +279,17 @@ public class quanli extends javax.swing.JFrame {
 
         jLayeredPaneQuanLy.setLayout(new java.awt.CardLayout());
 
-        jTableMail.setModel(new javax.swing.table.DefaultTableModel(
+        jPanelTaiKhoan.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTableTaiKhoan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Email", "Tên KH", "SDT", "Pass", "Số Dư"
+                "Tài khoản", "Mật khẩu", "Mã loại tài khoản", "Số điện thoại"
             }
         ));
-        jScrollPane3.setViewportView(jTableMail);
+        jScrollPane3.setViewportView(jTableTaiKhoan);
 
         jButton1.setText("Thêm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -290,21 +298,21 @@ public class quanli extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanelMailLayout = new javax.swing.GroupLayout(jPanelMail);
-        jPanelMail.setLayout(jPanelMailLayout);
-        jPanelMailLayout.setHorizontalGroup(
-            jPanelMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMailLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelTaiKhoanLayout = new javax.swing.GroupLayout(jPanelTaiKhoan);
+        jPanelTaiKhoan.setLayout(jPanelTaiKhoanLayout);
+        jPanelTaiKhoanLayout.setHorizontalGroup(
+            jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 3, Short.MAX_VALUE))
-            .addGroup(jPanelMailLayout.createSequentialGroup()
+            .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
                 .addGap(89, 89, 89)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanelMailLayout.setVerticalGroup(
-            jPanelMailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMailLayout.createSequentialGroup()
+        jPanelTaiKhoanLayout.setVerticalGroup(
+            jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84)
@@ -312,7 +320,7 @@ public class quanli extends javax.swing.JFrame {
                 .addContainerGap(233, Short.MAX_VALUE))
         );
 
-        jLayeredPaneQuanLy.add(jPanelMail, "card3");
+        jLayeredPaneQuanLy.add(jPanelTaiKhoan, "card3");
 
         jTableNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -626,6 +634,35 @@ public class quanli extends javax.swing.JFrame {
 
         jLayeredPaneQuanLy.add(jPanelThongKe, "card9");
 
+        jTableLoaiTaiKhoan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã loại tài khoản", "Tên loại tài khoản"
+            }
+        ));
+        jScrollPane11.setViewportView(jTableLoaiTaiKhoan);
+
+        javax.swing.GroupLayout jPanelLoaiTaiKhoanLayout = new javax.swing.GroupLayout(jPanelLoaiTaiKhoan);
+        jPanelLoaiTaiKhoan.setLayout(jPanelLoaiTaiKhoanLayout);
+        jPanelLoaiTaiKhoanLayout.setHorizontalGroup(
+            jPanelLoaiTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLoaiTaiKhoanLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(144, Short.MAX_VALUE))
+        );
+        jPanelLoaiTaiKhoanLayout.setVerticalGroup(
+            jPanelLoaiTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLoaiTaiKhoanLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(332, Short.MAX_VALUE))
+        );
+
+        jLayeredPaneQuanLy.add(jPanelLoaiTaiKhoan, "card10");
+
         getContentPane().add(jLayeredPaneQuanLy, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 80, 620, 520));
 
         jPanelList.setBackground(new java.awt.Color(54, 33, 89));
@@ -651,8 +688,8 @@ public class quanli extends javax.swing.JFrame {
             .addGroup(jPanelList1Layout.createSequentialGroup()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanelList1Layout.setVerticalGroup(
             jPanelList1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -660,7 +697,7 @@ public class quanli extends javax.swing.JFrame {
             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanelList.add(jPanelList1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, -1));
+        jPanelList.add(jPanelList1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 180, -1));
 
         jPanelList2.setBackground(new java.awt.Color(64, 43, 100));
         jPanelList2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -673,7 +710,7 @@ public class quanli extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Mail");
+        jLabel10.setText("Loại tài khoản");
 
         javax.swing.GroupLayout jPanelList2Layout = new javax.swing.GroupLayout(jPanelList2);
         jPanelList2.setLayout(jPanelList2Layout);
@@ -682,8 +719,8 @@ public class quanli extends javax.swing.JFrame {
             .addGroup(jPanelList2Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanelList2Layout.setVerticalGroup(
             jPanelList2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -713,8 +750,8 @@ public class quanli extends javax.swing.JFrame {
             .addGroup(jPanelList3Layout.createSequentialGroup()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         jPanelList3Layout.setVerticalGroup(
             jPanelList3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -722,7 +759,7 @@ public class quanli extends javax.swing.JFrame {
             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanelList.add(jPanelList3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 180, -1));
+        jPanelList.add(jPanelList3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 180, -1));
 
         jPanelList4.setBackground(new java.awt.Color(64, 43, 100));
         jPanelList4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -744,8 +781,8 @@ public class quanli extends javax.swing.JFrame {
             .addGroup(jPanelList4Layout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanelList4Layout.setVerticalGroup(
             jPanelList4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -753,7 +790,7 @@ public class quanli extends javax.swing.JFrame {
             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanelList.add(jPanelList4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 180, -1));
+        jPanelList.add(jPanelList4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 180, -1));
 
         jPanelList5.setBackground(new java.awt.Color(64, 43, 100));
         jPanelList5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -775,8 +812,8 @@ public class quanli extends javax.swing.JFrame {
             .addGroup(jPanelList5Layout.createSequentialGroup()
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanelList5Layout.setVerticalGroup(
             jPanelList5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -784,7 +821,7 @@ public class quanli extends javax.swing.JFrame {
             .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanelList.add(jPanelList5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 180, -1));
+        jPanelList.add(jPanelList5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 180, -1));
 
         jPanelList7.setBackground(new java.awt.Color(64, 43, 100));
         jPanelList7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -806,7 +843,8 @@ public class quanli extends javax.swing.JFrame {
             .addGroup(jPanelList7Layout.createSequentialGroup()
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanelList7Layout.setVerticalGroup(
             jPanelList7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -814,7 +852,7 @@ public class quanli extends javax.swing.JFrame {
             .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanelList.add(jPanelList7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 180, -1));
+        jPanelList.add(jPanelList7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 180, -1));
 
         jPanelList8.setBackground(new java.awt.Color(64, 43, 100));
         jPanelList8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -827,7 +865,7 @@ public class quanli extends javax.swing.JFrame {
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setText("Thống kê");
+        jLabel22.setText("Tài khoản");
 
         javax.swing.GroupLayout jPanelList8Layout = new javax.swing.GroupLayout(jPanelList8);
         jPanelList8.setLayout(jPanelList8Layout);
@@ -836,7 +874,8 @@ public class quanli extends javax.swing.JFrame {
             .addGroup(jPanelList8Layout.createSequentialGroup()
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanelList8Layout.setVerticalGroup(
             jPanelList8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -844,7 +883,7 @@ public class quanli extends javax.swing.JFrame {
             .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanelList.add(jPanelList8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 180, -1));
+        jPanelList.add(jPanelList8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, -1));
 
         jPanelList6.setBackground(new java.awt.Color(64, 43, 100));
         jPanelList6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -866,7 +905,8 @@ public class quanli extends javax.swing.JFrame {
             .addGroup(jPanelList6Layout.createSequentialGroup()
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanelList6Layout.setVerticalGroup(
             jPanelList6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -874,7 +914,38 @@ public class quanli extends javax.swing.JFrame {
             .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanelList.add(jPanelList6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 180, -1));
+        jPanelList.add(jPanelList6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 180, -1));
+
+        jPanelList9.setBackground(new java.awt.Color(64, 43, 100));
+        jPanelList9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanelList9MousePressed(evt);
+            }
+        });
+
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/statistics_40px.png"))); // NOI18N
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Thống kê");
+
+        javax.swing.GroupLayout jPanelList9Layout = new javax.swing.GroupLayout(jPanelList9);
+        jPanelList9.setLayout(jPanelList9Layout);
+        jPanelList9Layout.setHorizontalGroup(
+            jPanelList9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelList9Layout.createSequentialGroup()
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jPanelList9Layout.setVerticalGroup(
+            jPanelList9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanelList.add(jPanelList9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 180, -1));
 
         getContentPane().add(jPanelList, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 179, 520));
 
@@ -903,16 +974,7 @@ public class quanli extends javax.swing.JFrame {
 
     private void jPanelList2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelList2MousePressed
         // TODO add your handling code here:
-        switchPanels(jPanelMail);
         
-        resetColor(jPanelList1);
-        setColor(jPanelList2);
-        resetColor(jPanelList3);
-        resetColor(jPanelList4);
-        resetColor(jPanelList5);
-        resetColor(jPanelList6);
-        resetColor(jPanelList7);
-        resetColor(jPanelList8);
     }//GEN-LAST:event_jPanelList2MousePressed
 
     private void jPanelList3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelList3MousePressed
@@ -977,15 +1039,16 @@ public class quanli extends javax.swing.JFrame {
 
     private void jPanelList8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelList8MousePressed
         // TODO add your handling code here:
-        switchPanels(jPanelThongKe);
+        switchPanels(jPanelTaiKhoan);
+        
         resetColor(jPanelList1);
-        resetColor(jPanelList2);
+        setColor(jPanelList2);
         resetColor(jPanelList3);
         resetColor(jPanelList4);
         resetColor(jPanelList5);
         resetColor(jPanelList6);
         resetColor(jPanelList7);
-        setColor(jPanelList8);
+        resetColor(jPanelList8);
     }//GEN-LAST:event_jPanelList8MousePressed
 
     private void jTableTuyenTramMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTuyenTramMouseClicked
@@ -1014,6 +1077,19 @@ public class quanli extends javax.swing.JFrame {
         resetColor(jPanelList7);
         resetColor(jPanelList8);
     }//GEN-LAST:event_jPanelList6MousePressed
+
+    private void jPanelList9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelList9MousePressed
+        // TODO add your handling code here:
+        switchPanels(jPanelThongKe);
+        resetColor(jPanelList1);
+        resetColor(jPanelList2);
+        resetColor(jPanelList3);
+        resetColor(jPanelList4);
+        resetColor(jPanelList5);
+        resetColor(jPanelList6);
+        resetColor(jPanelList7);
+        setColor(jPanelList8);
+    }//GEN-LAST:event_jPanelList9MousePressed
     public void switchPanels(JPanel panel){
         jLayeredPaneQuanLy.removeAll();
         jLayeredPaneQuanLy.add(panel);
@@ -1038,7 +1114,7 @@ public class quanli extends javax.swing.JFrame {
                 vt.add(rs.getString(5));
                 vt.add(rs.getString(6));
                 vt.add(rs.getString(7));
-                
+                vt.add(rs.getString(8));
                 dtm.addRow(vt);
                 
             }
@@ -1050,13 +1126,13 @@ public class quanli extends javax.swing.JFrame {
             System.out.println("loi lay ve");
         }
     }
-    void layMail(){
-        dtm= (DefaultTableModel) jTableMail.getModel();
+    void layTaiKhoan(){
+        dtm= (DefaultTableModel) jTableTaiKhoan.getModel();
         dtm.setNumRows(0);
         Connection ketNoi=Banvexe.layKetNoi();
         Vector vt;
         try {
-            PreparedStatement ps=ketNoi.prepareStatement("select * from Mail");
+            PreparedStatement ps=ketNoi.prepareStatement("select * from TaiKhoan");
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 vt= new Vector();
@@ -1064,17 +1140,16 @@ public class quanli extends javax.swing.JFrame {
                 vt.add(rs.getString(2));
                 vt.add(rs.getString(3));
                 vt.add(rs.getString(4));
-                vt.add(rs.getString(5));
                 
                 dtm.addRow(vt);
                 
             }
-            jTableMail.setModel(dtm);
+            jTableTaiKhoan.setModel(dtm);
             ps.close();
             rs.close();
             ketNoi.close();
         } catch (SQLException ex) {
-            System.out.println("loi lay mail");
+            System.out.println("loi lay tai khoan");
         }
     }
     void layTuyenTram(){
@@ -1349,6 +1424,8 @@ public class quanli extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -1369,8 +1446,10 @@ public class quanli extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelList6;
     private javax.swing.JPanel jPanelList7;
     private javax.swing.JPanel jPanelList8;
-    private javax.swing.JPanel jPanelMail;
+    private javax.swing.JPanel jPanelList9;
+    private javax.swing.JPanel jPanelLoaiTaiKhoan;
     private javax.swing.JPanel jPanelNhanVien;
+    private javax.swing.JPanel jPanelTaiKhoan;
     private javax.swing.JPanel jPanelThongKe;
     private javax.swing.JPanel jPanelTuyen;
     private javax.swing.JPanel jPanelTuyenTram;
@@ -1378,6 +1457,7 @@ public class quanli extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelXe;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1392,8 +1472,9 @@ public class quanli extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTableChuyen;
-    private javax.swing.JTable jTableMail;
+    private javax.swing.JTable jTableLoaiTaiKhoan;
     private javax.swing.JTable jTableNhanVien;
+    private javax.swing.JTable jTableTaiKhoan;
     private javax.swing.JTable jTableThongKeTheoNgayTT;
     private javax.swing.JTable jTableThongKeTheoNgayVSV;
     private javax.swing.JTable jTableThongKeTheoNgayVT;

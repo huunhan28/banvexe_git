@@ -26,14 +26,19 @@ public class vexe extends javax.swing.JFrame {
         int ok=0;
         Connection ketNoi=Banvexe.layKetNoi();
         try{
-            PreparedStatement ps= ketNoi.prepareStatement("select Email,Pass from Mail");
+            PreparedStatement ps= ketNoi.prepareStatement("select * from TaiKhoan");
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                
-               if(rs.getString("Email").equalsIgnoreCase(email)&&rs.getString("Pass").equalsIgnoreCase(pass)) {
+               if(rs.getString(1).equalsIgnoreCase(email)&&rs.getString(2).equalsIgnoreCase(pass)) {
+                   if(rs.getString(3).equals("KH")){
+                       ok = 1;
+                       break;
+                   }else if(rs.getString(3).equals("AD")){
+                       ok = 2;
+                       break;
+                   }
                    
-                   ok = 1;
-                   break;
                }else{
                    ok = 0;
                }
@@ -44,32 +49,72 @@ public class vexe extends javax.swing.JFrame {
         }
         return ok;
     }
-    public void luuTaiKhoan(String email,String ten,String sdt,String matKhau,float soDu){
+    public void luuTaiKhoan(String email,String ten,String sdt,String matKhau){
+        int tonTaiSDT=0;
         Connection ketNoi=Banvexe.layKetNoi();
         try{
-            PreparedStatement ps= ketNoi.prepareStatement("insert into Mail values(?,?,?,?,?)");
-            ps.setString(1, email);
-            ps.setString(2, ten);
-            ps.setString(3, sdt);
-            ps.setString(4, matKhau);
-            ps.setFloat(5, soDu);
-            ps.executeUpdate();
+            PreparedStatement ps= ketNoi.prepareStatement("select SDT from KhachHang");
+            ResultSet rs=ps.executeQuery();
+            if(rs.getString(1).equals(sdt)){
+                tonTaiSDT=1;
+            }    
+            
+            
         }catch(SQLException e){
             System.out.println("loi luu chuyen xe");
         }
+        if(tonTaiSDT==0){
+            try{
+                PreparedStatement ps= ketNoi.prepareStatement("insert into KhachHang values(?,?)");
+                ps.setString(1, sdt);
+                ps.setString(2, ten);
+                
+                ps.executeUpdate();
+            }catch(SQLException e){
+                System.out.println("loi luu khach hang");
+            }
+            
+            try{
+                PreparedStatement ps= ketNoi.prepareStatement("insert into TaiKhoan values(?,?,?,?)");
+                
+                ps.setString(1, email);
+                ps.setString(2, matKhau);
+                ps.setString(3, "KH");
+                ps.setString(4, sdt);
+                ps.executeUpdate();
+            }catch(SQLException e){
+                System.out.println("loi luu tai khoan");
+            }
+        }
+        
     }
-    public int kiemTraEmail(String email){
+    public int kiemTraTaiKhoan(String tk){
         Connection ketNoi=Banvexe.layKetNoi();
         try{
-            PreparedStatement ps= ketNoi.prepareStatement("select Email from Mail");
+            PreparedStatement ps= ketNoi.prepareStatement("select TaiKhoan from TaiKhoan");
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
-                if(rs.getString("Email").equalsIgnoreCase(email)){
+                if(rs.getString("TaiKhoan").equalsIgnoreCase(tk)){
                     return 1;
                 }
             }
         }catch(SQLException e){
-            System.out.println("loi lay email");
+            System.out.println("loi lay Tai Khoan");
+        }
+        return 0;
+    }
+    public int kiemTraSDT(String sdt){
+        Connection ketNoi=Banvexe.layKetNoi();
+        try{
+            PreparedStatement ps= ketNoi.prepareStatement("select SDT from KhachHang");
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                if(rs.getString("SDT").equalsIgnoreCase(sdt)){
+                    return 1;
+                }
+            }
+        }catch(SQLException e){
+            System.out.println("loi lay sdt");
         }
         return 0;
     }
@@ -82,15 +127,8 @@ public class vexe extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        windowsButtonUI1 = new com.jgoodies.looks.windows.WindowsButtonUI();
-        windowsButtonUI2 = new com.jgoodies.looks.windows.WindowsButtonUI();
-        windowsButtonUI3 = new com.jgoodies.looks.windows.WindowsButtonUI();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jDialog1 = new javax.swing.JDialog();
-        jTextFieldDKEmail = new javax.swing.JTextField();
+        jTextFieldDKTK = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldDKTen = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -105,23 +143,14 @@ public class vexe extends javax.swing.JFrame {
         jLabelThoat = new javax.swing.JLabel();
         jPanelDangNhap = new javax.swing.JPanel();
         jLabelDangNhap = new javax.swing.JLabel();
-        jTextFieldEmail = new javax.swing.JTextField();
+        jTextFieldTaiKhoan = new javax.swing.JTextField();
         jTextFieldMatKhau = new javax.swing.JTextField();
         jLabelButtonDangNhap = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabelDKTK = new javax.swing.JLabel();
 
-        jMenuItem1.setText("jMenuItem1");
-
-        jMenuItem2.setText("jMenuItem2");
-
-        jRadioButtonMenuItem1.setSelected(true);
-        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
-
-        jMenuItem3.setText("jMenuItem3");
-
-        jLabel4.setText("Email");
+        jLabel4.setText("Tài khoản");
 
         jLabel5.setText("Tên ");
 
@@ -157,8 +186,8 @@ public class vexe extends javax.swing.JFrame {
                         .addComponent(jTextFieldDKTen, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jDialog1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                        .addComponent(jTextFieldDKEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addComponent(jTextFieldDKTK, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(82, 82, 82))
             .addGroup(jDialog1Layout.createSequentialGroup()
                 .addGap(150, 150, 150)
@@ -170,7 +199,7 @@ public class vexe extends javax.swing.JFrame {
             .addGroup(jDialog1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldDKEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDKTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -238,9 +267,9 @@ public class vexe extends javax.swing.JFrame {
         jLabelDangNhap.setFont(new java.awt.Font("Tahoma", 2, 24)); // NOI18N
         jLabelDangNhap.setText("ĐĂNG NHẬP");
 
-        jTextFieldEmail.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldEmailActionPerformed(evt);
+                jTextFieldTaiKhoanActionPerformed(evt);
             }
         });
 
@@ -289,7 +318,7 @@ public class vexe extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(100, 100, 100)
                         .addGroup(jPanelDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(282, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDangNhapLayout.createSequentialGroup()
@@ -309,7 +338,7 @@ public class vexe extends javax.swing.JFrame {
                 .addComponent(jLabelDangNhap)
                 .addGap(81, 81, 81)
                 .addGroup(jPanelDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(36, 36, 36)
                 .addGroup(jPanelDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -333,9 +362,9 @@ public class vexe extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jLabelThoatMouseClicked
 
-    private void jTextFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmailActionPerformed
+    private void jTextFieldTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTaiKhoanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldEmailActionPerformed
+    }//GEN-LAST:event_jTextFieldTaiKhoanActionPerformed
 
     private void jTextFieldMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMatKhauActionPerformed
         // TODO add your handling code here:
@@ -343,15 +372,28 @@ public class vexe extends javax.swing.JFrame {
 
     private void jLabelButtonDangNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonDangNhapMouseClicked
         // TODO add your handling code here:
-        if(ktUser(jTextFieldEmail.getText(),jTextFieldMatKhau.getText())==1){
+        if(jTextFieldTaiKhoan.getText().trim().equals("")){
+            jTextFieldTaiKhoan.setBorder(BorderFactory.createLineBorder(Color.red));
+            jTextFieldTaiKhoan.setHorizontalAlignment(jTextFieldTaiKhoan.RIGHT);
+            jTextFieldTaiKhoan.setForeground(Color.red);
+            jTextFieldTaiKhoan.setText("!");
+        }
+        if(jTextFieldMatKhau.getText().trim().equals("")){
+            jTextFieldMatKhau.setBorder(BorderFactory.createLineBorder(Color.red));
+            jTextFieldMatKhau.setHorizontalAlignment(jTextFieldTaiKhoan.RIGHT);
+            jTextFieldMatKhau.setForeground(Color.red);
+            jTextFieldMatKhau.setText("!");
+        }
+        if(ktUser(jTextFieldTaiKhoan.getText(),jTextFieldMatKhau.getText())==1){
             System.out.println("cho nay");
-            new muave(jTextFieldEmail.getText()).setVisible(true);
+            new muave(jTextFieldTaiKhoan.getText()).setVisible(true);
             this.dispose();
         }
-        else if(jTextFieldEmail.getText().equalsIgnoreCase("admin")&&jTextFieldMatKhau.getText().equalsIgnoreCase("admin")){
+        else if(ktUser(jTextFieldTaiKhoan.getText(),jTextFieldMatKhau.getText())==2){
             new quanli().setVisible(true);
             this.dispose();
         }else{
+            JOptionPane.showMessageDialog(this, "Sai thong tin dang nhap");
             System.out.println("sai thong tin dang nhap");
         }
         
@@ -366,19 +408,19 @@ public class vexe extends javax.swing.JFrame {
 
     private void jButtonDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDangKyActionPerformed
         // TODO add your handling code here:
-        String email=jTextFieldDKEmail.getText();
-        String ten=jTextFieldDKTen.getText();
         String sdt=jTextFieldDKSDT.getText();
+        String ten=jTextFieldDKTen.getText();
+        String tk=jTextFieldDKTK.getText();
         String matKhau=jTextFieldDKMK.getText();
-        float soDu=0;
-        if(kiemTraEmail(email)==0&&email!=null&&ten!=null&&sdt!=null&&matKhau!=null){
-            luuTaiKhoan(email, ten, sdt, matKhau,soDu );
+        
+        if(kiemTraTaiKhoan(tk)==0&&kiemTraSDT(sdt)==0&&tk!=null&&ten!=null&&sdt!=null&&matKhau!=null){
+            luuTaiKhoan(tk, ten, sdt, matKhau);
             System.out.println("Dang ki tai khoan thanh cong. Moi dang nhap.");
             JOptionPane.showMessageDialog(this, "Dang ki tai khoan thanh cong. Moi dang nhap.");
             jDialog1.dispose();
         }else{
             System.out.println("Email da ton tai");
-            JOptionPane.showMessageDialog(this, "Email da ton tai hoac thieu thong tin");
+            JOptionPane.showMessageDialog(this, "Tai khoan da ton tai hoac thieu thong tin");
         }
         
     }//GEN-LAST:event_jButtonDangKyActionPerformed
@@ -433,21 +475,14 @@ public class vexe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelHome;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelThoat;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanelDangNhap;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
-    private javax.swing.JTextField jTextFieldDKEmail;
     private javax.swing.JTextField jTextFieldDKMK;
     private javax.swing.JTextField jTextFieldDKSDT;
+    private javax.swing.JTextField jTextFieldDKTK;
     private javax.swing.JTextField jTextFieldDKTen;
-    private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldMatKhau;
+    private javax.swing.JTextField jTextFieldTaiKhoan;
     private keeptoo.KGradientPanel kGradientPanelVeXe;
-    private com.jgoodies.looks.windows.WindowsButtonUI windowsButtonUI1;
-    private com.jgoodies.looks.windows.WindowsButtonUI windowsButtonUI2;
-    private com.jgoodies.looks.windows.WindowsButtonUI windowsButtonUI3;
     // End of variables declaration//GEN-END:variables
 
 

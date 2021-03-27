@@ -22,28 +22,29 @@ public class muave extends javax.swing.JFrame {
     /**
      * Creates new form muave
      */
-    public muave(String email) {
+    public muave(String tk) {
         initComponents();
-        layKhachHang(email);
+        layKhachHang(tk);
         layTuyen();
         switchPanels(jPanelMuaVe);
         setColor(jPanelList1);
         resetColor(jPanelList2);
         resetColor(jPanelList3);
     }
-    void layKhachHang(String email){
+    void layKhachHang(String tk){
         Connection ketNoi=Banvexe.layKetNoi();
         try{
-            PreparedStatement ps= ketNoi.prepareStatement("select TenKH from Mail where Email='"+email+"'");
+            PreparedStatement ps= ketNoi.prepareStatement("select TenKhachHang,MatKhau,TaiKhoan.SDT from KhachHang,TaiKhoan where TaiKhoan.SDT=KhachHang.SDT and TaiKhoan='"+tk+"'");
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
-                //jComboBox1.addItem(rs.getString("MaTuyen"));
-                jLabelHello.setText(rs.getString("TenKH"));
-                jLabelEmail.setText(email);
+                
+                jLabelHello.setText(rs.getString("TenKhachHang"));
+                jLabelTaiKhoan.setText(tk);
+                jTextFieldMatKhau.setText("MatKhau");
+                jTextFieldSDT.setText("SDT");
             }
         }catch(SQLException e){
-            System.out.println("loi lay Mail");
-            System.out.println("");
+            System.out.println("loi lay thong tin de in ");
         }
     }
     void layTuyen(){
@@ -58,7 +59,7 @@ public class muave extends javax.swing.JFrame {
             System.out.println("loi lay tuyen");
         }
     }
-    void muaVe(String maChuyen,int maVe,int soChoDat,String loaiVe,String NoiDi,String NoiDen,String email,float gia){
+    void muaVe(String maChuyen,int maVe,int soChoDat,String loaiVe,String NoiDi,String NoiDen,String taiKhoan,float gia){
         //them chuyen xe
         //them ve
         Connection ketNoi=Banvexe.layKetNoi();
@@ -81,7 +82,7 @@ public class muave extends javax.swing.JFrame {
             ps.setFloat(5, gia);
             ps.setString(6, NoiDi);
             ps.setString(7, NoiDen);
-            ps.setString(8, email);
+            ps.setString(8, taiKhoan);
             ps.executeUpdate();
         }catch(SQLException e){
             System.out.println("loi luu ve");
@@ -139,16 +140,8 @@ public class muave extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabelEmail = new javax.swing.JLabel();
+        jLabelTaiKhoan = new javax.swing.JLabel();
         jLayeredPanelMuaVe = new javax.swing.JLayeredPane();
-        jPanelTaiKhoan = new javax.swing.JPanel();
-        jLabel18 = new javax.swing.JLabel();
-        jTextFieldMatKhau = new javax.swing.JTextField();
-        jTextFieldTen = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        jTextFieldSDT = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         jPanelMuaVe = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jTextFieldSoGhe = new javax.swing.JTextField();
@@ -182,6 +175,12 @@ public class muave extends javax.swing.JFrame {
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabelTVEmail = new javax.swing.JLabel();
+        jPanelTaiKhoan = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jTextFieldMatKhau = new javax.swing.JTextField();
+        jTextFieldSDT = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -346,70 +345,13 @@ public class muave extends javax.swing.JFrame {
         });
         jPanelList.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, -1, -1));
 
-        jLabelEmail.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabelEmail.setForeground(new java.awt.Color(255, 255, 255));
-        jPanelList.add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 180, -1));
+        jLabelTaiKhoan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelTaiKhoan.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelList.add(jLabelTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 180, -1));
 
         getContentPane().add(jPanelList, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, -1, 520));
 
         jLayeredPanelMuaVe.setLayout(new java.awt.CardLayout());
-
-        jLabel18.setText("Mật khẩu");
-
-        jLabel20.setText("Tên");
-
-        jLabel21.setText("SDT");
-
-        jLabel22.setText("Sửa thông tin");
-        jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel22MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelTaiKhoanLayout = new javax.swing.GroupLayout(jPanelTaiKhoan);
-        jPanelTaiKhoan.setLayout(jPanelTaiKhoanLayout);
-        jPanelTaiKhoanLayout.setHorizontalGroup(
-            jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
-                .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel20)
-                            .addComponent(jLabel21))
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldTen, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
-                        .addGap(249, 249, 249)
-                        .addComponent(jLabel22)))
-                .addContainerGap(192, Short.MAX_VALUE))
-        );
-        jPanelTaiKhoanLayout.setVerticalGroup(
-            jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(jTextFieldMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21))
-                .addGap(97, 97, 97)
-                .addComponent(jLabel22)
-                .addContainerGap(244, Short.MAX_VALUE))
-        );
-
-        jLayeredPanelMuaVe.add(jPanelTaiKhoan, "card4");
 
         jLabel13.setText("Số ghế");
 
@@ -617,6 +559,55 @@ public class muave extends javax.swing.JFrame {
 
         jLayeredPanelMuaVe.add(jPanelTimVe, "card3");
 
+        jLabel18.setText("Mật khẩu");
+
+        jLabel21.setText("SDT");
+
+        jLabel22.setText("Sửa thông tin");
+        jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel22MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelTaiKhoanLayout = new javax.swing.GroupLayout(jPanelTaiKhoan);
+        jPanelTaiKhoan.setLayout(jPanelTaiKhoanLayout);
+        jPanelTaiKhoanLayout.setHorizontalGroup(
+            jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
+                .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel21))
+                        .addGap(49, 49, 49)
+                        .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
+                        .addGap(249, 249, 249)
+                        .addComponent(jLabel22)))
+                .addContainerGap(192, Short.MAX_VALUE))
+        );
+        jPanelTaiKhoanLayout.setVerticalGroup(
+            jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTaiKhoanLayout.createSequentialGroup()
+                .addGap(99, 99, 99)
+                .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(jTextFieldMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanelTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(jTextFieldSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(130, 130, 130)
+                .addComponent(jLabel22)
+                .addContainerGap(244, Short.MAX_VALUE))
+        );
+
+        jLayeredPanelMuaVe.add(jPanelTaiKhoan, "card4");
+
         getContentPane().add(jLayeredPanelMuaVe, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 89, 630, 550));
 
         pack();
@@ -658,7 +649,7 @@ public class muave extends javax.swing.JFrame {
         int tongSoChoDat=1;
         String soGhe1= jTextFieldSoGhe.getText();
         int soGhe=Integer.parseInt(soGhe1);
-        String email=jLabelEmail.getText();
+        String email=jLabelTaiKhoan.getText();
         String tuyen=(String) jComboBoxTuyen.getSelectedItem() ;
         String chuyen=(String) jComboBoxChuyen.getSelectedItem();
         String noiDi=(String) jComboBoxNoiDi.getSelectedItem();
@@ -738,20 +729,26 @@ public class muave extends javax.swing.JFrame {
 
     private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
         // TODO add your handling code here:
-        String matKhau=jTextFieldMatKhau.getText();
-        String ten=jTextFieldTen.getText();
-        String sdt=jTextFieldSDT.getText();
-        if(matKhau==""&&ten==""&&sdt==""){
+        String matKhau=jTextFieldMatKhau.getText().trim();
+        String sdt=jTextFieldSDT.getText().trim();
+        if(matKhau==""&&sdt==""){
             JOptionPane.showMessageDialog(this, "Thong tin rong");
             return;
         }
         Connection ketNoi=Banvexe.layKetNoi();
         try{
-            PreparedStatement ps= ketNoi.prepareStatement("update Mail set tenKH='"+ten+"',sdt='"+sdt+"',pass='"+matKhau+"' where Email='"+jLabelEmail.getText()+"'");
+            PreparedStatement ps= ketNoi.prepareStatement("update KhachHang set sdt='"+sdt+"' where TenKhachHang='"+jLabelHello.getText()+"'");
             
             ps.executeUpdate();
         }catch(SQLException e){
-            System.out.println("loi luu thay doi thong tin");
+            System.out.println("loi luu thay doi thong tin KH");
+        }
+        try{
+            PreparedStatement ps= ketNoi.prepareStatement("update TaiKhoan set sdt='"+sdt+"',pass='"+matKhau+"' where TaiKhoan='"+jLabelTaiKhoan.getText()+"'");
+            
+            ps.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("loi luu thay doi thong tin TK");
         }
         
     }//GEN-LAST:event_jLabel22MouseClicked
@@ -852,7 +849,6 @@ public class muave extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -869,7 +865,6 @@ public class muave extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabelEmail;
     private javax.swing.JLabel jLabelHello;
     private javax.swing.JLabel jLabelHome;
     private javax.swing.JLabel jLabelLogo;
@@ -880,6 +875,7 @@ public class muave extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelTVNoiDen;
     private javax.swing.JLabel jLabelTVNoiDi;
     private javax.swing.JLabel jLabelTVSoChoDat;
+    private javax.swing.JLabel jLabelTaiKhoan;
     private javax.swing.JLabel jLabelThoat;
     private javax.swing.JLayeredPane jLayeredPanelMuaVe;
     private javax.swing.JPanel jPanelList;
@@ -892,7 +888,6 @@ public class muave extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldMatKhau;
     private javax.swing.JTextField jTextFieldSDT;
     private javax.swing.JTextField jTextFieldSoGhe;
-    private javax.swing.JTextField jTextFieldTen;
     private javax.swing.JTextField jTextFieldTimMaVe;
     private keeptoo.KGradientPanel kGradientPanelMuaVe;
     // End of variables declaration//GEN-END:variables
