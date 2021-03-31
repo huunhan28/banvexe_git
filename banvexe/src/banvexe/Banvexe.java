@@ -21,9 +21,9 @@ public class Banvexe {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             ketNoi=DriverManager.getConnection("jdbc:sqlserver://;databaseName=QLVEXE1","sa","123");
-            System.out.println("thanh cong");
+            System.out.println("ket noi sql thanh cong");
         } catch (ClassNotFoundException|SQLException ex) {
-            System.out.println("that bai");
+            System.out.println("ket noi sql that bai");
         }
         return ketNoi;
     }

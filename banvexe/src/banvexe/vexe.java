@@ -8,10 +8,12 @@ import java.awt.Color;
 import java.sql.*;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 /**
  *
  * @author Huu Nhan
  */
+
 public class vexe extends javax.swing.JFrame {
 
     /**
@@ -20,6 +22,45 @@ public class vexe extends javax.swing.JFrame {
     
     public vexe() {
         initComponents();
+        
+    }
+    public void luuTaiKhoan(String tk,String ten,String sdt,String matKhau){
+        int tonTaiSDT=0;
+        Connection ketNoi=Banvexe.layKetNoi();
+        try{
+            PreparedStatement ps= ketNoi.prepareStatement("select SDT from KhachHang");
+            ResultSet rs=ps.executeQuery();
+            if(rs.getString(1).equals(sdt)){
+                tonTaiSDT=1;
+            }    
+            
+            
+        }catch(SQLException e){
+            System.out.println("loi luu chuyen xe");
+        }
+        if(tonTaiSDT==0){
+            try{
+                PreparedStatement ps= ketNoi.prepareStatement("insert into KhachHang values(?,?)");
+                ps.setString(1, sdt);
+                ps.setString(2, ten);
+                
+                ps.executeUpdate();
+            }catch(SQLException e){
+                System.out.println("loi luu khach hang");
+            }
+            
+            try{
+                PreparedStatement ps= ketNoi.prepareStatement("insert into TaiKhoan values(?,?,?,?)");
+                
+                ps.setString(1, tk);
+                ps.setString(2, matKhau);
+                ps.setString(3, "KH");
+                ps.setString(4, sdt);
+                ps.executeUpdate();
+            }catch(SQLException e){
+                System.out.println("loi luu tai khoan");
+            }
+        }
         
     }
     public int ktUser(String email,String pass){
@@ -49,45 +90,7 @@ public class vexe extends javax.swing.JFrame {
         }
         return ok;
     }
-    public void luuTaiKhoan(String email,String ten,String sdt,String matKhau){
-        int tonTaiSDT=0;
-        Connection ketNoi=Banvexe.layKetNoi();
-        try{
-            PreparedStatement ps= ketNoi.prepareStatement("select SDT from KhachHang");
-            ResultSet rs=ps.executeQuery();
-            if(rs.getString(1).equals(sdt)){
-                tonTaiSDT=1;
-            }    
-            
-            
-        }catch(SQLException e){
-            System.out.println("loi luu chuyen xe");
-        }
-        if(tonTaiSDT==0){
-            try{
-                PreparedStatement ps= ketNoi.prepareStatement("insert into KhachHang values(?,?)");
-                ps.setString(1, sdt);
-                ps.setString(2, ten);
-                
-                ps.executeUpdate();
-            }catch(SQLException e){
-                System.out.println("loi luu khach hang");
-            }
-            
-            try{
-                PreparedStatement ps= ketNoi.prepareStatement("insert into TaiKhoan values(?,?,?,?)");
-                
-                ps.setString(1, email);
-                ps.setString(2, matKhau);
-                ps.setString(3, "KH");
-                ps.setString(4, sdt);
-                ps.executeUpdate();
-            }catch(SQLException e){
-                System.out.println("loi luu tai khoan");
-            }
-        }
-        
-    }
+    
     public int kiemTraTaiKhoan(String tk){
         Connection ketNoi=Banvexe.layKetNoi();
         try{
@@ -267,12 +270,22 @@ public class vexe extends javax.swing.JFrame {
         jLabelDangNhap.setFont(new java.awt.Font("Tahoma", 2, 24)); // NOI18N
         jLabelDangNhap.setText("ĐĂNG NHẬP");
 
+        jTextFieldTaiKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldTaiKhoanMouseClicked(evt);
+            }
+        });
         jTextFieldTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldTaiKhoanActionPerformed(evt);
             }
         });
 
+        jTextFieldMatKhau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldMatKhauMouseClicked(evt);
+            }
+        });
         jTextFieldMatKhau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldMatKhauActionPerformed(evt);
@@ -384,19 +397,20 @@ public class vexe extends javax.swing.JFrame {
             jTextFieldMatKhau.setForeground(Color.red);
             jTextFieldMatKhau.setText("!");
         }
-        if(ktUser(jTextFieldTaiKhoan.getText(),jTextFieldMatKhau.getText())==1){
-            System.out.println("cho nay");
-            new muave(jTextFieldTaiKhoan.getText()).setVisible(true);
-            this.dispose();
+        if(jTextFieldTaiKhoan.getText().trim()!=null&&jTextFieldMatKhau.getText().trim()!=null){
+            if(ktUser(jTextFieldTaiKhoan.getText(),jTextFieldMatKhau.getText())==1){
+                System.out.println("cho nay");
+                new muave(jTextFieldTaiKhoan.getText()).setVisible(true);
+                this.dispose();
+            }
+            else if(ktUser(jTextFieldTaiKhoan.getText(),jTextFieldMatKhau.getText())==2){
+                new quanli().setVisible(true);
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(this, "Sai thong tin dang nhap");
+                System.out.println("sai thong tin dang nhap");
+            }
         }
-        else if(ktUser(jTextFieldTaiKhoan.getText(),jTextFieldMatKhau.getText())==2){
-            new quanli().setVisible(true);
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(this, "Sai thong tin dang nhap");
-            System.out.println("sai thong tin dang nhap");
-        }
-        
     }//GEN-LAST:event_jLabelButtonDangNhapMouseClicked
 
     private void jLabelDKTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDKTKMouseClicked
@@ -424,6 +438,28 @@ public class vexe extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButtonDangKyActionPerformed
+
+    private void jTextFieldTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldTaiKhoanMouseClicked
+        // TODO add your handling code here:
+        if(jTextFieldTaiKhoan.getText().equals("!")){
+        jTextFieldTaiKhoan.setText("");
+        jTextFieldTaiKhoan.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        jTextFieldTaiKhoan.setHorizontalAlignment(JTextField.LEFT);
+        jTextFieldTaiKhoan.setForeground(Color.black);
+        
+        }
+    }//GEN-LAST:event_jTextFieldTaiKhoanMouseClicked
+
+    private void jTextFieldMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldMatKhauMouseClicked
+        // TODO add your handling code here:
+        if(jTextFieldMatKhau.getText().equals("!")){
+        jTextFieldMatKhau.setText("");
+        jTextFieldMatKhau.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        jTextFieldMatKhau.setHorizontalAlignment(JTextField.LEFT);
+        jTextFieldMatKhau.setForeground(Color.black);
+        
+        }
+    }//GEN-LAST:event_jTextFieldMatKhauMouseClicked
 
     /**
      * @param args the command line arguments
